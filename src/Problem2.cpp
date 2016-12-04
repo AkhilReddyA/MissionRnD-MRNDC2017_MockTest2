@@ -46,9 +46,80 @@ Constraints :
 
 #include <stdio.h>
 #include <stdlib.h>
-
-
+#include<string.h>
+#define N 500
 void rotateArray(int **arr, int len, char *seq)
 {
-	//Manipulate input array for output
+	if (len >= 0 && len <= 500 && strlen(seq) >= 0 && strlen(seq) <= 500)
+	{
+		for (int i = 0; i < strlen(seq); i++)
+		{
+			if (seq[i] == 'l' || seq[i] == 'L')
+			{
+				rotatel(arr);
+			}
+			if (seq[i] == 'r' || seq[i] == 'R')
+			{
+				rotater(arr);
+			}
+		}
+	}
+	
+	else
+	{
+		printf("exception");
+	}
+	
+}
+void rotatel(int **mat)
+{
+	// Consider all squares one by one
+	for (int x = 0; x < N / 2; x++)
+	{
+		// Consider elements in group of 4 in 
+		// current square
+		for (int y = x; y < N - x - 1; y++)
+		{
+			// store current cell in temp variable
+			int temp = mat[x][y];
+
+			// move values from right to top
+			mat[x][y] = mat[y][N - 1 - x];
+
+			// move values from bottom to right
+			mat[y][N - 1 - x] = mat[N - 1 - x][N - 1 - y];
+
+			// move values from left to bottom
+			mat[N - 1 - x][N - 1 - y] = mat[N - 1 - y][x];
+
+			// assign temp to left
+			mat[N - 1 - y][x] = temp;
+		}
+	}
+}
+void rotater(int **mat)
+{
+	// Consider all squares one by one
+	for (int x = 0; x < N / 2; x++)
+	{
+		// Consider elements in group of 4 in 
+		// current square
+		for (int y = x; y < N - x - 1; y++)
+		{
+			// store current cell in temp variable
+			int temp = mat[x][y];
+
+			// move values from right to top
+			mat[x][y] = mat[N - 1 - y][x];
+
+			// move values from bottom to right
+			mat[N - 1 - y][x] = mat[N - 1 - x][N - 1 - y];
+
+			// move values from left to bottom
+			mat[N - 1 - x][N - 1 - y] = mat[y][N - 1 - x];
+
+			// assign temp to left
+			mat[N - 1 - y][x] = temp;
+		}
+	}
 }
