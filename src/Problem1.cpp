@@ -49,8 +49,127 @@ e. Email length must be less than or equal to 254 characters.
 
 #include <stdio.h>
 #include <stdlib.h>
+#include <ctype.h>
+
 
 int isValidEmail(char *email)
 {
-	return -1;
+	char *name, *d_email;
+	int count = 0,len;
+	int countp = 0;
+	int i, j;
+	int t, t2;
+	int k = 0, k1 = 0, temp1, temp2, temp;
+	for (i = 0; email[i] != '\0'; ++i);
+	len = i;
+	name = (char *)malloc(len*sizeof(char));
+	d_email = (char *)malloc(len*sizeof(char));
+	i = 0;
+	j = 0;
+	while (email[i] != ' ')
+	{
+		name[i] = email[i];
+		i++;
+	}
+	name[i] = '\0';
+	while (email[i] != '\0')
+	{
+		d_email[j] = email[i];
+		i++;
+		j++;
+	}
+	d_email[j] = '\0';
+	for (i = 0; i<len; i++)
+	{
+		if (d_email[i] == '@')
+		{
+			count++;
+			t = i;
+		}
+	}
+	if (count == 1)
+	{
+		for (j = 0; j<t; j++)
+		{
+			if (!(d_email[j] == '_' || d_email[j] == '.' || isalpha(d_email[j]) || isdigit(d_email[j])))
+			{
+				k = -1;
+				break;
+			}
+		}
+		if (k == 0)
+		{
+			for (i = 0; i>t; i++)
+			{
+				if (d_email[i] == '.')
+				{
+					t2 = i;
+					countp++;
+				}
+			}
+			if (countp == 1)
+			{
+				for (i = 0; i<t2 && i>t2; i++)
+				{
+					if (!(isalpha(d_email[i])))
+					{
+						k = -1;
+						break;
+					}
+					else
+					{
+						k = 1;
+					}
+				}
+				if (k == 1)
+				{
+					if (d_email[t2 + 3] != '\0')
+					{
+						k = -1;
+					}
+
+				}
+			}
+			else
+			{
+				k = -1;
+			}
+		}
+	}
+	else
+	{
+		k = -1;
+	}
+	i = 0;
+	j = 0;
+	while ((d_email[j] != '\0') || (name[i] != '\0')) {
+		if (name[i] != d_email[j]) {
+			j++;
+			i = 0;
+		}
+		else {
+			i++;
+			j++;
+		}
+	}
+	if (name[i] == '\0')
+		temp = j;
+	else
+		temp=-1;
+	for (i = 0; d_email[i] != '\0'; ++i);
+	temp1 = i;
+	for (i = 0; name[i] != '\0'; ++i);
+	temp2 = i;
+	if (temp != temp2&&temp!=temp1)
+	{
+		k1 = 1;
+	}
+	free(name);
+	free(d_email);
+	if (k!=-1&&k1!=1)
+		return 1;
+	if (k != -1 && k1 == 1)
+		return 2;
+	else
+		return 0;
 }

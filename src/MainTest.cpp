@@ -10,9 +10,11 @@ decrease or become 0 , If it leads to a Project Build Failure .
 */
 
 #include <stdio.h>
+#include <stdlib.h>
 #include "FunctionHeaders.h"
 
 int main(){
-
-
+	//char *name = (char *)malloc(100*sizeof(char));
+    //name="Manoj iammanoj@gmail.com";
+	//int validmail = isValidEmail(name);
 }
